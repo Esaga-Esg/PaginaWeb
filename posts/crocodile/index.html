@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Resolucion de la maquina crocodile del Starting Point de HackThebox.
+Reconocimiento Confirmamos que la maquina Victima este activa:
+1 2 3 4 5 6 7 8 ❯ ping -c 2 10.129.128.219 PING 10.129.128.219 (10.129.128.219) 56(84) bytes of data. 64 bytes from 10.129.128.219: icmp_seq=1 ttl=63 time=60.0 ms 64 bytes from 10.129.128.219: icmp_seq=2 ttl=63 time=59.0 ms --- 10.129.128.219 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1001ms rtt min/avg/max/mdev = 59.'>
+<title>HackTheBox - Crocodile</title>
+
+<link rel='canonical' href='/posts/crocodile/'>
+
+<link rel="stylesheet" href="/scss/style.min.8191399262444ab68b72a18c97392f5349be20a1615d77445be51e974c144cff.css"><meta property='og:title' content='HackTheBox - Crocodile'>
+<meta property='og:description' content='Resolucion de la maquina crocodile del Starting Point de HackThebox.
+Reconocimiento Confirmamos que la maquina Victima este activa:
+1 2 3 4 5 6 7 8 ❯ ping -c 2 10.129.128.219 PING 10.129.128.219 (10.129.128.219) 56(84) bytes of data. 64 bytes from 10.129.128.219: icmp_seq=1 ttl=63 time=60.0 ms 64 bytes from 10.129.128.219: icmp_seq=2 ttl=63 time=59.0 ms --- 10.129.128.219 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1001ms rtt min/avg/max/mdev = 59.'>
+<meta property='og:url' content='/posts/crocodile/'>
+<meta property='og:site_name' content='0z3etxh'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='Very Easy' /><meta property='article:tag' content='Starting Point' /><meta property='article:tag' content='HTB' /><meta property='article:published_time' content='2023-01-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-01-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="HackTheBox - Crocodile">
+<meta name="twitter:description" content="Resolucion de la maquina crocodile del Starting Point de HackThebox.
+Reconocimiento Confirmamos que la maquina Victima este activa:
+1 2 3 4 5 6 7 8 ❯ ping -c 2 10.129.128.219 PING 10.129.128.219 (10.129.128.219) 56(84) bytes of data. 64 bytes from 10.129.128.219: icmp_seq=1 ttl=63 time=60.0 ms 64 bytes from 10.129.128.219: icmp_seq=2 ttl=63 time=59.0 ms --- 10.129.128.219 ping statistics --- 2 packets transmitted, 2 received, 0% packet loss, time 1001ms rtt min/avg/max/mdev = 59.">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/pro1_hu346797bd4123882d575093c1e1ad4708_248865_300x0_resize_box_3.png" width="300"
+                            height="298" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">0z3etxh</a></h1>
+            <h2 class="site-description"><a href="/about"><img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=16&pause=1000&color=05AC06&width=200&height=30&lines=%24.%2Fusr%2Fbin%2Fwhoami+;%3E+0z3etxh" alt="Typing SVG" /></a></h2>
+            <h2 class="site-description">CyberSecurity Student | CTF's</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/0z3etxh'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://app.hackthebox.com/profile/1022508'
+                        target="_blank"
+                        title="Hackthebox"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" standalone="no"?>
+        <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+        "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"> <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="IconChangeColor" height="219" width="219"><title>Hack The Box</title><path d="M11.9959.0008a1.1187 1.1187 0 00-.057.002.8993.8993 0 00-.2358.0498.9067.9067 0 00-.1652.079L1.9357 5.675a.889.889 0 00-.4444.7699c0 .006.0004.0128.0006.0192-.0002.007 0 .014 0 .0212V17.556a.889.889 0 00.469.7837l9.5983 5.5416c.018.0102.036.0197.054.0287v.002a.8568.8568 0 00.083.0348c0 .001.01.003.012.004.028.01.056.0177.085.0245.01.001.011.003.016.004.028.006.057.0112.086.0146 0 .0005.01.0009.014.001.03.003.061.005.091.005s.061-.002.091-.005c0-.0005.01-.0009.014-.001a.6831.6831 0 00.086-.0146c.01-.001.011-.002.016-.004a.9404.9404 0 00.085-.0245c0-.001.01-.003.012-.004a.8818.8818 0 00.083-.0347v-.002a1.086 1.086 0 00.054-.0287l9.5986-5.5416a.889.889 0 00.4689-.7837V6.4786c0-.009-.0006-.0172-.0008-.0258h.0003v-.008a.8886.8886 0 00-.3117-.6755c-.01-.008-.019-.0162-.029-.0241 0-.002-.01-.005-.01-.007a.8988.8988 0 00-.1074-.0705L12.4533.1267a.8872.8872 0 00-.4646-.1266zm.01 2.2523c.072 0 .1443.0187.209.056l6.5366 3.774c.2789.161.2789.5633 0 .7243l-6.5367 3.774a.4182.4182 0 01-.4182 0L5.26 6.8074c-.2788-.1609-.2789-.5633 0-.7243l6.5368-3.774a.4193.4193 0 01.209-.056zm-8.0801 6.458a.4145.4145 0 01.215.0565l6.524 3.7666a.417.417 0 01.2086.3612v7.5326c0 .3212-.3477.522-.626.3613l-6.5237-3.7666a.4172.4172 0 01-.2086-.3613V9.1288c0-.2408.1955-.414.4107-.4177zm16.1599 0c.215.004.4107.1768.4107.4177v7.5325c0 .149-.08.2868-.2087.3614l-6.5239 3.7666c-.278.1606-.6258-.0401-.6258-.3614v-7.5325c0-.149.08-.2867.2086-.3613l6.5238-3.7666a.415.415 0 01.2152-.0565z" id="mainIconPathAttribute" stroke-width="0.8" stroke="#00ff33" filter="url(#shadow)" fill="green"></path><filter id="shadow"><feDropShadow id="shadowValue" stdDeviation=".5" dx="0" dy="1.1" flood-color="black"></feDropShadow></filter></svg> 
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='www.linkedin.com/in/jose-milane-590476262'
+                        target="_blank"
+                        title="Linkedin"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path fill="#0077B5" fill-rule="evenodd" d="M22.0367422,22 L17.8848745,22 L17.8848745,15.5036305 C17.8848745,13.9543347 17.85863,11.9615082 15.7275829,11.9615082 C13.5676669,11.9615082 13.237862,13.6498994 13.237862,15.3925291 L13.237862,22 L9.0903683,22 L9.0903683,8.64071385 L13.0707725,8.64071385 L13.0707725,10.4673257 L13.1276354,10.4673257 C13.6813927,9.41667396 15.0356049,8.3091593 17.0555507,8.3091593 C21.2599073,8.3091593 22.0367422,11.0753215 22.0367422,14.6734319 L22.0367422,22 Z M4.40923804,6.81585163 C3.07514653,6.81585163 2,5.73720584 2,4.40748841 C2,3.07864579 3.07514653,2 4.40923804,2 C5.73720584,2 6.81585163,3.07864579 6.81585163,4.40748841 C6.81585163,5.73720584 5.73720584,6.81585163 4.40923804,6.81585163 L4.40923804,6.81585163 Z M6.48604672,22 L2.32980492,22 L2.32980492,8.64071385 L6.48604672,8.64071385 L6.48604672,22 Z"/>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/0z3etxh'
+                        target="_blank"
+                        title="Twitter"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 -4 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <title>Twitter-color</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+
+</defs>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Color-" transform="translate(-300.000000, -164.000000)" fill="#00AAEC">
+            <path d="M348,168.735283 C346.236309,169.538462 344.337383,170.081618 342.345483,170.324305 C344.379644,169.076201 345.940482,167.097147 346.675823,164.739617 C344.771263,165.895269 342.666667,166.736006 340.418384,167.18671 C338.626519,165.224991 336.065504,164 333.231203,164 C327.796443,164 323.387216,168.521488 323.387216,174.097508 C323.387216,174.88913 323.471738,175.657638 323.640782,176.397255 C315.456242,175.975442 308.201444,171.959552 303.341433,165.843265 C302.493397,167.339834 302.008804,169.076201 302.008804,170.925244 C302.008804,174.426869 303.747139,177.518238 306.389857,179.329722 C304.778306,179.280607 303.256911,178.821235 301.9271,178.070061 L301.9271,178.194294 C301.9271,183.08848 305.322064,187.17082 309.8299,188.095341 C309.004402,188.33225 308.133826,188.450704 307.235077,188.450704 C306.601162,188.450704 305.981335,188.390033 305.381229,188.271578 C306.634971,192.28169 310.269414,195.2026 314.580032,195.280607 C311.210424,197.99061 306.961789,199.605634 302.349709,199.605634 C301.555203,199.605634 300.769149,199.559408 300,199.466956 C304.358514,202.327194 309.53689,204 315.095615,204 C333.211481,204 343.114633,188.615385 343.114633,175.270495 C343.114633,174.831347 343.106181,174.392199 343.089276,173.961719 C345.013559,172.537378 346.684275,170.760563 348,168.735283" id="Twitter">
+
+</path>
+        </g>
+    </g>
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.youtube.com/channel/UCfomCw9SVSCK7OE5Aa2OguA'
+                        target="_blank"
+                        title="Youtube"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" encoding="UTF-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 -38 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+    <g>
+				<path d="M250.346231,28.0746923 C247.358133,17.0320558 238.732098,8.40602109 227.689461,5.41792308 C207.823743,0 127.868333,0 127.868333,0 C127.868333,0 47.9129229,0.164179487 28.0472049,5.58210256 C17.0045684,8.57020058 8.37853373,17.1962353 5.39043571,28.2388718 C-0.618533519,63.5374615 -2.94988224,117.322662 5.5546152,151.209308 C8.54271322,162.251944 17.1687479,170.877979 28.2113844,173.866077 C48.0771024,179.284 128.032513,179.284 128.032513,179.284 C128.032513,179.284 207.987923,179.284 227.853641,173.866077 C238.896277,170.877979 247.522312,162.251944 250.51041,151.209308 C256.847738,115.861464 258.801474,62.1091 250.346231,28.0746923 Z" fill="#FF0000">
+</path>
+				<polygon fill="#FFFFFF" points="102.420513 128.06 168.749025 89.642 102.420513 51.224">
+</polygon>
+		</g>
+</svg>
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About Me</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#reconocimiento">Reconocimiento</a>
+      <ol>
+        <li><a href="#escaneo-de-puertos">Escaneo de puertos</a></li>
+      </ol>
+    </li>
+    <li><a href="#ftp-login">FTP Login</a>
+      <ol>
+        <li><a href="#get-files">Get Files</a></li>
+      </ol>
+    </li>
+    <li><a href="#http--web---puerto-80">HTTP  (Web - Puerto 80)</a>
+      <ol>
+        <li><a href="#brute-force-gobuster">Brute Force (Gobuster)</a></li>
+        <li><a href="#loginphp-file">Login.php (file)</a></li>
+      </ol>
+    </li>
+    <li><a href="#task-preguntas-a-responder">Task (Preguntas a responder)</a>
+      <ol>
+        <li><a href="#task-1">Task 1.</a></li>
+        <li><a href="#task-2">Task 2.</a></li>
+        <li><a href="#task-3">Task 3.</a></li>
+        <li><a href="#task-4">Task 4.</a></li>
+        <li><a href="#task-5">Task 5.</a></li>
+        <li><a href="#task-6">Task 6.</a></li>
+        <li><a href="#task-7">Task 7.</a></li>
+        <li><a href="#task-8">Task 8.</a></li>
+        <li><a href="#task-9">Task 9.</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/crocodile/">HackTheBox - Crocodile</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 09, 2023</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p><img src="/img/post/crocodile/crocodile.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+>
+Resolucion de la maquina crocodile del Starting Point de HackThebox.</p>
+<h2 id="reconocimiento">Reconocimiento</h2>
+<p>Confirmamos que la maquina Victima este activa:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ ping -c <span class="m">2</span> 10.129.128.219
+</span></span><span class="line"><span class="cl">PING 10.129.128.219 <span class="o">(</span>10.129.128.219<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+</span></span><span class="line"><span class="cl"><span class="m">64</span> bytes from 10.129.128.219: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">63</span> <span class="nv">time</span><span class="o">=</span>60.0 ms
+</span></span><span class="line"><span class="cl"><span class="m">64</span> bytes from 10.129.128.219: <span class="nv">icmp_seq</span><span class="o">=</span><span class="m">2</span> <span class="nv">ttl</span><span class="o">=</span><span class="m">63</span> <span class="nv">time</span><span class="o">=</span>59.0 ms
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">--- 10.129.128.219 ping statistics ---
+</span></span><span class="line"><span class="cl"><span class="m">2</span> packets transmitted, <span class="m">2</span> received, 0% packet loss, <span class="nb">time</span> 1001ms
+</span></span><span class="line"><span class="cl">rtt min/avg/max/mdev <span class="o">=</span> 59.036/59.525/60.014/0.489 ms
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Enviamos 2 paquetes y los recibimos devuelta, por lo que la maquina se encuentra activa.</p>
+<h3 id="escaneo-de-puertos">Escaneo de puertos</h3>
+<p>Vamos a Escanear la maquina victima, para ver posibles puertos abiertos o servicios vulnerables:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ nmap -sV -sC 10.129.128.219
+</span></span><span class="line"><span class="cl">Starting Nmap 7.93 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2023-01-18 01:01 AST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.129.128.219 <span class="o">(</span>10.129.128.219<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.055s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">998</span> closed tcp ports <span class="o">(</span>conn-refused<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">21/tcp open  ftp     vsftpd 3.0.3
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ftp-anon: Anonymous FTP login allowed <span class="o">(</span>FTP code 230<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> -rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">33</span> Jun <span class="m">08</span>  <span class="m">2021</span> allowed.userlist
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_-rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">62</span> Apr <span class="m">20</span>  <span class="m">2021</span> allowed.userlist.passwd
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ftp-syst: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   STAT: 
+</span></span><span class="line"><span class="cl"><span class="p">|</span> FTP server status:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      Connected to ::ffff:10.10.14.212
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      Logged in as ftp
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      TYPE: ASCII
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      No session bandwidth limit
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      Session timeout in seconds is <span class="m">300</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      Control connection is plain text
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      Data connections will be plain text
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      At session startup, client count was <span class="m">2</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>      vsFTPd 3.0.3 - secure, fast, stable
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_End of status
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.4.41 <span class="o">((</span>Ubuntu<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Smash - Bootstrap Business Template
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/2.4.41 <span class="o">(</span>Ubuntu<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Unix
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 10.59 seconds
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="ftp-login">FTP Login</h2>
+<p>Miramos en nuestro escaneo, los servicios que corren en esta maquina, si se fijan en el puerto 21 (ftp), nos lista 2 archivos :</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">ftp-anon: Anonymous FTP login allowed (FTP code 230)
+</span></span><span class="line"><span class="cl">| -rw-r--r--    1 ftp      ftp            33 Jun 08  2021 allowed.userlist
+</span></span><span class="line"><span class="cl">|_-rw-r--r--    1 ftp      ftp            62 Apr 20  2021 allowed.userlist.passwd
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>En una maquina anterior, ya habiamos usado este metodo, que seria hacer un login mendiante ftp, con el usuario por defecto, que seria &ldquo;anonymous&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ftp 10.129.11.176
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Luego, que logramos conexion mediante este servicio, vamos a extraer(Descargar), los 2 archivos anteriormente mencionados.</p>
+<p>Primeramente Listamos el contenido, para ver que otras cosas podemos ver ahi dentro:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ftp&gt; dir
+</span></span><span class="line"><span class="cl"><span class="m">229</span> Entering Extended Passive Mode <span class="o">(||</span><span class="p">|</span>43944<span class="p">|</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="m">150</span> Here comes the directory listing.
+</span></span><span class="line"><span class="cl">-rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">33</span> Jun <span class="m">08</span>  <span class="m">2021</span> allowed.userlist
+</span></span><span class="line"><span class="cl">-rw-r--r--    <span class="m">1</span> ftp      ftp            <span class="m">62</span> Apr <span class="m">20</span>  <span class="m">2021</span> allowed.userlist.passwd
+</span></span><span class="line"><span class="cl"><span class="m">226</span> Directory send OK.
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Necesitamos descargar esto 2 archivos, para ver su contenido, para eso utilizamos &ldquo;get&rdquo;</p>
+<h3 id="get-files">Get Files</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ftp&gt; get allowed.userlist
+</span></span><span class="line"><span class="cl">local: allowed.userlist remote: allowed.userlist
+</span></span><span class="line"><span class="cl"><span class="m">229</span> Entering Extended Passive Mode <span class="o">(||</span><span class="p">|</span>44046<span class="p">|</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="m">150</span> Opening BINARY mode data connection <span class="k">for</span> allowed.userlist <span class="o">(</span><span class="m">33</span> bytes<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">100% <span class="p">|</span>*******************************************************************************************************************************************<span class="p">|</span>    <span class="m">33</span>       19.32 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl"><span class="m">226</span> Transfer complete.
+</span></span><span class="line"><span class="cl"><span class="m">33</span> bytes received in 00:00 <span class="o">(</span>0.56 KiB/s<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<blockquote>
+</blockquote>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ftp&gt; get allowed.userlist.passwd
+</span></span><span class="line"><span class="cl">local: allowed.userlist.passwd remote: allowed.userlist.passwd
+</span></span><span class="line"><span class="cl"><span class="m">229</span> Entering Extended Passive Mode <span class="o">(||</span><span class="p">|</span>42178<span class="p">|</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="m">150</span> Opening BINARY mode data connection <span class="k">for</span> allowed.userlist.passwd <span class="o">(</span><span class="m">62</span> bytes<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">100% <span class="p">|</span>*******************************************************************************************************************************************<span class="p">|</span>    <span class="m">62</span>      651.04 KiB/s    00:00 ETA
+</span></span><span class="line"><span class="cl"><span class="m">226</span> Transfer complete.
+</span></span><span class="line"><span class="cl"><span class="m">62</span> bytes received in 00:00 <span class="o">(</span>1.08 KiB/s<span class="o">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Miramos el contenido de cada archivo, que ya debemos de tener descargado en nuestra maquina.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ cat allowed.userlist
+</span></span><span class="line"><span class="cl">───────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">       │ File: allowed.userlist
+</span></span><span class="line"><span class="cl">───────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">   <span class="m">1</span>   │ aron
+</span></span><span class="line"><span class="cl">   <span class="m">2</span>   │ pwnmeow
+</span></span><span class="line"><span class="cl">   <span class="m">3</span>   │ egotisticalsw
+</span></span><span class="line"><span class="cl">   <span class="m">4</span>   │ admin
+</span></span><span class="line"><span class="cl">───────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">❯ cat allowed.userlist.passwd
+</span></span><span class="line"><span class="cl">───────┬────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">       │ File: allowed.userlist.passwd
+</span></span><span class="line"><span class="cl">───────┼────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">   <span class="m">1</span>   │ root
+</span></span><span class="line"><span class="cl">   <span class="m">2</span>   │ Supersecretpassword1
+</span></span><span class="line"><span class="cl">   <span class="m">3</span>   │ @BaASD<span class="p">&amp;</span>9032123sADS
+</span></span><span class="line"><span class="cl">   <span class="m">4</span>   │ rKXM59ESxesUFHAd
+</span></span><span class="line"><span class="cl">───────┴────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="http--web---puerto-80">HTTP  (Web - Puerto 80)</h2>
+<p>Pasamos a explorar el otro puerto abierto encontrado en el escaneo.</p>
+<p>Si vamos al navegador y entramos a la pagina de la maquina victima podemos ver esta pagina.</p>
+<p><img src="/img/post/crocodile/page.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h3 id="brute-force-gobuster">Brute Force (Gobuster)</h3>
+<p>Vamos a aplicar fuerza bruta a la url de la maquina victima, para ver si podemos listar archivos de esta.</p>
+<p>Utilizaremos Gobuster.</p>
+<p>Gobuster es una herramienta utilizada para realizar fuerza bruta a: URIs (directorios y archivos) en sitios web, subdominios DNS (con soporte de comodines), y nombres de hosts virtuales en los servidores web.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">❯ gobuster dir -u 10.129.11.176 -w /usr/share/dirb/wordlists/common.txt -x .php
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">Gobuster v3.3
+</span></span><span class="line"><span class="cl">by OJ Reeves <span class="o">(</span>@TheColonial<span class="o">)</span> <span class="p">&amp;</span> Christian Mehlmauer <span class="o">(</span>@firefart<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Url:                     http://10.129.11.176
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Method:                  GET
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Threads:                 <span class="m">10</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Wordlist:                /usr/share/dirb/wordlists/common.txt
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Negative Status codes:   <span class="m">404</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> User Agent:              gobuster/3.3
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Extensions:              php
+</span></span><span class="line"><span class="cl"><span class="o">[</span>+<span class="o">]</span> Timeout:                 <span class="nv">10s</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">2023/01/18 13:35:02 Starting gobuster in directory enumeration <span class="nv">mode</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span><span class="line"><span class="cl">/.php                 <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.hta                 <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.hta.php             <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.htaccess            <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.htaccess.php        <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.htpasswd            <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/.htpasswd.php        <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/assets               <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 315<span class="o">]</span> <span class="o">[</span>--&gt; http://10.129.11.176/assets/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/config.php           <span class="o">(</span>Status: 200<span class="o">)</span> <span class="o">[</span>Size: 0<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/css                  <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 312<span class="o">]</span> <span class="o">[</span>--&gt; http://10.129.11.176/css/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/dashboard            <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 318<span class="o">]</span> <span class="o">[</span>--&gt; http://10.129.11.176/dashboard/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/fonts                <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 314<span class="o">]</span> <span class="o">[</span>--&gt; http://10.129.11.176/fonts/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/index.html           <span class="o">(</span>Status: 200<span class="o">)</span> <span class="o">[</span>Size: 58565<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/js                   <span class="o">(</span>Status: 301<span class="o">)</span> <span class="o">[</span>Size: 311<span class="o">]</span> <span class="o">[</span>--&gt; http://10.129.11.176/js/<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/login.php            <span class="o">(</span>Status: 200<span class="o">)</span> <span class="o">[</span>Size: 1577<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/logout.php           <span class="o">(</span>Status: 302<span class="o">)</span> <span class="o">[</span>Size: 0<span class="o">]</span> <span class="o">[</span>--&gt; login.php<span class="o">]</span>
+</span></span><span class="line"><span class="cl">/server-status        <span class="o">(</span>Status: 403<span class="o">)</span> <span class="o">[</span>Size: 278<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Progress: <span class="m">9175</span> / <span class="m">9230</span> <span class="o">(</span>99.40%<span class="o">)===============================================================</span>
+</span></span><span class="line"><span class="cl">2023/01/18 13:35:56 <span class="nv">Finished</span>
+</span></span><span class="line"><span class="cl"><span class="o">===============================================================</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>En nuestro output, miramos varios archivos encontrados, pero en este caso vamos a ir primero por el archivo login.php.</p>
+<h3 id="loginphp-file">Login.php (file)</h3>
+<p>Ya que en el puerto ftp, encontramos unos archivos con listas de usuarios, vamos a tratar de iniciar secion con estos.</p>
+<p>Vamos al navegador y en el dominio, agregamos el login.php, para intentar acceder:</p>
+<p><img src="/img/post/crocodile/login1.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>Nos carga esta pagina:</p>
+<p><img src="/img/post/crocodile/login2.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<p>Aqui Probamos con los users que tenemos en los archivos descargados anteriormente.</p>
+<p>Ya con al iniciar secion tenemos la flag, que buscamos.</p>
+<p><img src="/img/post/crocodile/flag.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="img"
+	
+	
+></p>
+<h2 id="task-preguntas-a-responder">Task (Preguntas a responder)</h2>
+<p>Ahora pasamos a responder todas las preguntas, para completar esta maquina.</p>
+<h3 id="task-1">Task 1.</h3>
+<p>What nmap scanning switch employs the use of default scripts during a scan?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">-sC
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-2">Task 2.</h3>
+<p>What service version is found to be running on port 21?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">vsftpd 3.0.3
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-3">Task 3.</h3>
+<p>What FTP code is returned to us for the &ldquo;Anonymous FTP login allowed&rdquo; message?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">230
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-4">Task 4.</h3>
+<p>What command can we use to download the files we find on the FTP server?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">get
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-5">Task 5.</h3>
+<p>What is one of the higher-privilege sounding usernames in the list we retrieved?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">admin
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-6">Task 6.</h3>
+<p>What version of Apache HTTP Server is running on the target host?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">2.4.41
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-7">Task 7.</h3>
+<p>What is the name of a handy web site analysis plug-in we can install in our browser?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">Wappalyzer
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-8">Task 8.</h3>
+<p>What switch can we use with gobuster to specify we are looking for specific filetypes?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">-x
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="task-9">Task 9.</h3>
+<p>What file have we found that can provide us a foothold on the target?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">login.php
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/very-easy/">Very Easy</a>
+        
+            <a href="/tags/starting-point/">Starting Point</a>
+        
+            <a href="/tags/htb/">HTB</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/responder/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HackTheBox - Responder</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/sequel/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HackTheBox - Sequel</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/appointment/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HackTheBox - Appointment</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/reedemer/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HackTheBox - Redeemer</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/dancing/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HackTheBox - Dancing</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2023 0z3etxh
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.16.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
